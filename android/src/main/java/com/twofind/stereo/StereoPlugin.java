@@ -100,7 +100,7 @@ public class StereoPlugin implements MethodCallHandler, PluginRegistry.ActivityR
       case "app.getAudioTrack":
         if (call.arguments != null) {
           if (call.arguments instanceof String) {
-            result.success(AudioTrack.toJson(path));
+            result.success(AudioTrack.toJson(call.arguments + ""));
             return;
           }
         }
