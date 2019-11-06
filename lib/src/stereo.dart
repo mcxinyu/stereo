@@ -161,8 +161,12 @@ class Stereo {
     Map data;
 
     try {
-      data =
-          await _channel.invokeMethod('app.getAudioTrack', path ?? file.path);
+      data = await _channel.invokeMethod(
+        'app.getAudioTrack',
+        {
+          'path': path ?? file.path,
+        },
+      );
     } on PlatformException catch (e) {
       if (e.code == 'STORAGE_PERMISSION_DENIED') {
         throw new StereoPermissionsDeniedException(e.message);
