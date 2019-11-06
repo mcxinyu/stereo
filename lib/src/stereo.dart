@@ -157,6 +157,25 @@ class Stereo {
     return new AudioTrack.fromJson(data);
   }
 
+  Future<AudioTrack> getAudioTrackForm({File file, String path}) async {
+    Map data;
+
+    try {
+      data =
+          await _channel.invokeMethod('app.getAudioTrack', path ?? file.path);
+    } on PlatformException catch (e) {
+      if (e.code == 'STORAGE_PERMISSION_DENIED') {
+        throw new StereoPermissionsDeniedException(e.message);
+      } else if (e.code == 'NO_TRACK_SELECTED') {
+        throw new StereoNoTrackSelectedException(e.message);
+      } else {
+        rethrow;
+      }
+    }
+
+    return new AudioTrack.fromJson(data);
+  }
+
   /// Starts or resumes playback.
   Future play() async {
     await _channel.invokeMethod('app.play');

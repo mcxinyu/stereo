@@ -97,6 +97,11 @@ public class StereoPlugin implements MethodCallHandler, PluginRegistry.ActivityR
 
         break;
 
+      case "app.getAudioTrack":
+          pendingResult.success(AudioTrack.toJson(path));
+          pendingResult = null;
+          break;
+
       // play() method.
       case "app.play":
         play();
